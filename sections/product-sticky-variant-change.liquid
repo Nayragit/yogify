@@ -1,4 +1,4 @@
-{{ 'product-sticky-variant-change.css' | asset_url | stylesheet_tag }}
+{% comment %} {{ 'product-sticky-variant-change.css' | asset_url | stylesheet_tag }} {% endcomment %}
 
 {%- assign target_product = section.settings.featured_product -%}
 
@@ -91,7 +91,7 @@
     </button>
   </div>
 
-  {% comment %} <style>
+   <style>
     /* Section Base */
     .product-showcase {
       width: 100%;
@@ -333,7 +333,7 @@
         display: none !important;
       }
     }
-  </style> {% endcomment %}
+  </style>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
