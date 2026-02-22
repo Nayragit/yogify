@@ -18,13 +18,17 @@
         <!-- Image Column -->
         <div class="product-showcase__media">
           <div class="product-showcase__image-wrapper">
-            <img 
-              id="MainProductImage-{{ section.id }}"
-              src="{{ current_variant.featured_image | default: target_product.featured_image | img_url: '1024x' }}" 
-              alt="{{ target_product.title | escape }}" 
-              class="product-showcase__image"
-              loading="lazy"
-            >
+            {% assign dynamic_id = 'MainProductImage-' | append: section.id %}
+            {% assign showcase_image = current_variant.featured_image | default: target_product.featured_image %}
+            {% if showcase_image %}
+              {{ showcase_image | image_url: width: 1200 | image_tag: 
+                id: dynamic_id,
+                class: 'product-showcase__image',
+                loading: 'lazy',
+                widths: '400, 600, 800, 1000, 1200',
+                sizes: '(max-width: 767px) 100vw, 50vw'
+              }}
+            {% endif %}
           </div>
         </div>
 
@@ -383,7 +387,10 @@
           variantHiddenInput.value = variantId;
 
           // Update Image
-          if (mainImage && variantImage) mainImage.src = variantImage;
+          if (mainImage && variantImage) {
+            mainImage.src = variantImage;
+            mainImage.removeAttribute('srcset');
+          }
 
           // Update Prices
           if (mainPrice) mainPrice.innerHTML = variantPrice;

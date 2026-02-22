@@ -1,4 +1,4 @@
-{{ 'section-custom-hero.css' | asset_url | stylesheet_tag }}
+{{ 'section-custom-hero.css' | asset_url | stylesheet_tag: preload: true }}
 
 {%- capture section_styles -%}
   --padding-top: {{ section.settings.padding_top }}px;
@@ -22,23 +22,25 @@
     {%- if section.settings.image_desktop != blank or section.settings.image_mobile != blank -%}
       <picture>
         {%- if section.settings.image_mobile != blank -%}
-          <source media="(max-width: 767px)" srcset="{{ section.settings.image_mobile | image_url: width: 750 }}">
+          <source media="(max-width: 767px)" srcset="{{ section.settings.image_mobile | image_url: width: 400 }} 400w, {{ section.settings.image_mobile | image_url: width: 600 }} 600w, {{ section.settings.image_mobile | image_url: width: 800 }} 800w" sizes="100vw">
         {%- endif -%}
         
         {%- if section.settings.image_desktop != blank -%}
-          <source media="(min-width: 768px)" srcset="{{ section.settings.image_desktop | image_url: width: 2000 }}">
-          {{ section.settings.image_desktop | image_url: width: 2000 | image_tag: 
-            class: 'custom-hero__image',
-            preload: true,
-            fetchpriority: 'high'
-          }}
+          <source media="(min-width: 768px)" srcset="{{ section.settings.image_desktop | image_url: width: 1000 }} 1000w, {{ section.settings.image_desktop | image_url: width: 1600 }} 1600w, {{ section.settings.image_desktop | image_url: width: 2400 }} 2400w" sizes="100vw">
+          {%- assign img_fallback = section.settings.image_desktop -%}
         {%- else -%}
-          {{ section.settings.image_mobile | image_url: width: 750 | image_tag: 
-            class: 'custom-hero__image',
-            preload: true,
-            fetchpriority: 'high'
-          }}
+          {%- assign img_fallback = section.settings.image_mobile -%}
         {%- endif -%}
+        
+        <img 
+          class="custom-hero__image"
+          src="{{ img_fallback | image_url: width: 1600 }}"
+          alt="{{ section.settings.title | escape }}"
+          fetchpriority="high"
+          loading="eager"
+          width="{{ img_fallback.width }}"
+          height="{{ img_fallback.height }}"
+        >
       </picture>
     {%- else -%}
       {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg custom-hero__image' }}
