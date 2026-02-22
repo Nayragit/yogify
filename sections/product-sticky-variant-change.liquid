@@ -1,4 +1,6 @@
 {{ 'product-sticky-variant.css' | asset_url | stylesheet_tag }}
+{{ 'product-sticky-variant.js' | asset_url | script_tag }}
+
 {%- assign target_product = section.settings.featured_product -%}
 
 {%- if target_product != blank -%}
@@ -334,7 +336,7 @@
     }
   </style> {% endcomment %}
 
-  <script>
+  {% comment %} <script>
     document.addEventListener('DOMContentLoaded', () => {
       const section = document.getElementById('ProductShowcase-{{ section.id }}');
       if (!section) return;
@@ -450,7 +452,7 @@
       if (mainBtn) mainBtn.addEventListener('click', () => handleAddToCart(mainBtn, mainBtnText));
       if (stickyBtn) stickyBtn.addEventListener('click', () => handleAddToCart(stickyBtn, stickyBtnText));
     });
-  </script>
+  </script> {% endcomment %}
 
 {%- else -%}
   <div style="padding: 60px 20px; text-align:center; background:#121212; color:#fff;">
