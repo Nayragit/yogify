@@ -1,0 +1,176 @@
+/* Base Hero Section */
+.custom-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #f4f4f4;
+  overflow: hidden;
+}
+
+/* Image Wrapper */
+.custom-hero__image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.custom-hero__image,
+.placeholder-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.placeholder-svg {
+  background-color: #e0e0e0;
+  fill: #888;
+}
+
+/* Content Area Using CSS Variables */
+.custom-hero__content-wrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  /* Apply padding from section settings with sensible mobile fallback */
+  padding-top: calc(var(--padding-top, 40px) * 0.7);
+  padding-bottom: calc(var(--padding-bottom, 40px) * 0.7);
+  padding-left: calc(var(--padding-left, 20px) * 0.7);
+  padding-right: calc(var(--padding-right, 20px) * 0.7);
+
+  /* Apply text alignment */
+  text-align: var(--text-alignment, center);
+  justify-content: center;
+  align-items: var(--align-items, center);
+
+  /* Modern Gradient Overlay for premium feel */
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+.custom-hero__content {
+  color: #ffffff;
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+  /* inherits from custom-hero__content-wrapper */
+}
+
+/* Modern Typography */
+.custom-hero__title {
+  margin: 0 0 1rem 0;
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.custom-hero__subheading {
+  margin: 0 0 2rem 0;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.custom-hero__subheading p {
+  margin: 0;
+}
+
+@keyframes subtlePulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Dynamic Button Styling */
+.custom-hero__button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  background-color: var(--button-bg-color, #ffffff);
+  color: var(--button-text-color, #000000);
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 50px;
+  /* Modern pill shape */
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  animation: subtlePulse 3s infinite ease-in-out;
+}
+
+.custom-hero__button:hover {
+  animation-play-state: paused;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  opacity: 0.95;
+}
+
+/* Mobile Adjustments */
+@media screen and (max-width: 767px) {
+  .custom-hero {
+    min-height: 65vh;
+  }
+
+  .custom-hero__title {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+    line-height: 1.1;
+  }
+
+  .custom-hero__subheading {
+    font-size: clamp(12px, 4vw, 16px);
+    line-height: 1.5;
+  }
+
+  .custom-hero__button {
+    width: 100%;
+    max-width: 300px;
+    font-size: 14px;
+  }
+}
+
+/* Desktop Adjustments */
+@media screen and (min-width: 768px) {
+  .custom-hero {
+    min-height: 85vh;
+  }
+
+  .custom-hero__content-wrapper {
+    /* Use full section padding on desktop */
+    padding-top: var(--padding-top, 40px);
+    padding-bottom: var(--padding-bottom, 40px);
+    padding-left: var(--padding-left, 20px);
+    padding-right: var(--padding-right, 20px);
+  }
+
+  .custom-hero__title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.1;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .custom-hero__subheading {
+    font-size: clamp(14px, 2.5vw, 20px);
+    line-height: 1.6;
+    margin: 0 0 2.5rem 0;
+  }
+
+  .custom-hero__button {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,178 @@
+{{ 'section-social-proof.css' | asset_url | stylesheet_tag }}
+
+{%- capture section_styles -%}
+  --padding-top: {{ section.settings.padding_top }}px;
+  --padding-bottom: {{ section.settings.padding_bottom }}px;
+  --padding-left: {{ section.settings.padding_left }}px;
+  --padding-right: {{ section.settings.padding_right }}px;
+  --bg-color: {{ section.settings.bg_color }};
+{%- endcapture -%}
+
+<section id="SocialProof-{{ section.id }}" class="social-proof" style="{{ section_styles }}" aria-label="Customer Testimonials">
+  <div class="social-proof__container">
+    
+    {%- if section.settings.heading != blank -%}
+      <h2 class="social-proof__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    {%- comment -%} BONUS: Conditional Market-Specific Trust Indicator {%- endcomment -%}
+    {%- if section.settings.show_trust_indicator -%}
+      <div class="social-proof__trust-badge">
+        <span class="social-proof__trust-stars">★★★★★</span>
+        <span class="social-proof__trust-text">
+          Trusted by over 10,000 customers in <strong>{{ localization.country.name }}</strong>
+        </span>
+      </div>
+    {%- endif -%}
+ 
+    <div class="social-proof__grid"> 
+      {%- for block in section.blocks -%}
+        <div class="social-proof__block" {{ block.shopify_attributes }}>
+          
+          <div class="social-proof__rating" aria-label="{{ block.settings.rating }} out of 5 stars">
+            {%- for i in (1..5) -%}
+              {%- if i <= block.settings.rating -%}
+                <span class="social-proof__star social-proof__star--filled">★</span>
+              {%- else -%}
+                <span class="social-proof__star social-proof__star--empty">☆</span>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          {%- if block.settings.testimonial != blank -%}
+            <blockquote class="social-proof__quote">
+              {{ block.settings.testimonial }}
+            </blockquote>
+          {%- endif -%}
+
+          {%- if block.settings.author != blank -%}
+            <div class="social-proof__author">
+              <strong>{{ block.settings.author | escape }}</strong>
+              {%- if block.settings.role != blank -%}
+                <span class="social-proof__role"> - {{ block.settings.role | escape }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Social Proof",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "What Our Clients Say"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_indicator",
+      "label": "Show Dynamic Trust Indicator",
+      "info": "Automatically displays the user's localized country name.",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Left",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Right",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star Rating",
+          "default": 5
+        },
+        {
+          "type": "richtext",
+          "id": "testimonial",
+          "label": "Testimonial",
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "Jane Doe"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role or Location",
+          "default": "CEO, TechCorp"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": " Custom Social Proof",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

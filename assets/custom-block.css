@@ -1,0 +1,127 @@
+/* Custom Block Section */
+.problem-solution {
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: var(--padding-top, 40px);
+  padding-bottom: var(--padding-bottom, 40px);
+  padding-left: var(--padding-left, 20px);
+  padding-right: var(--padding-right, 20px);
+  background-color: var(--bg-color, #121212);
+  overflow: hidden;
+  /* prevents horizontal scrolling issues */
+}
+
+.problem-solution__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.problem-solution__heading {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  color: #ffffff;
+  /* Dark Theme */
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: -0.02em;
+}
+
+/* Base Grid setup (Mobile-first Slider) */
+.problem-solution__grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+  /* Creates breathing room for the scrollbar/shadows */
+  /* Smooth scrolling */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.problem-solution__grid::-webkit-scrollbar {
+  display: none;
+  /* Safari & Chrome */
+}
+
+.problem-solution__block {
+  /* Dark modern glass-like styling */
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+
+  /* Slider behavior */
+  min-width: 100%;
+  /* fits exactly 1 card within container width */
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+.problem-solution__block:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.problem-solution__problem-title {
+  margin: 0 0 1rem 0;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+}
+
+.problem-solution__description {
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 2rem;
+  flex-grow: 1;
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  line-height: 1.6;
+}
+
+.problem-solution__highlight {
+  /* Subtle highlight for dark mode */
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #81c784;
+  border: 1px solid rgba(76, 175, 80, 0.15);
+  padding: 1.25rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.problem-solution__highlight strong {
+  color: #a5d6a7;
+  margin-right: 8px;
+}
+
+.problem-solution__icon {
+  font-size: 1.2rem;
+}
+
+@media screen and (min-width: 768px) {
+  .problem-solution__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow-x: visible;
+    /* Turn off slider */
+    padding-bottom: 1rem;
+  }
+
+  .problem-solution__block {
+    min-width: auto;
+    /* Allow grid to control width */
+  }
+}

@@ -1,0 +1,24 @@
+.custom-atc-btn {
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+   
+  @media screen and (max-width: 749px) {
+    .mobile-sticky-atc {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: white;
+      padding: 10px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+  }

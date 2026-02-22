@@ -1,0 +1,147 @@
+{{ 'custom-block.css' | asset_url | stylesheet_tag }}
+
+{%- capture section_styles -%}
+  --padding-top: {{ section.settings.padding_top }}px;
+  --padding-bottom: {{ section.settings.padding_bottom }}px;
+  --padding-left: {{ section.settings.padding_left }}px;
+  --padding-right: {{ section.settings.padding_right }}px;
+  --bg-color: {{ section.settings.bg_color }};
+{%- endcapture -%}
+
+<section id="ProblemSolution-{{ section.id }}" class="problem-solution" style="{{ section_styles }}" aria-label="Problem and Solution Section">
+  <div class="problem-solution__container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="problem-solution__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    <div class="problem-solution__grid">
+      {%- for block in section.blocks -%}
+        <div class="problem-solution__block" {{ block.shopify_attributes }}>
+          
+          {%- if block.settings.problem_title != blank -%}
+            <h3 class="problem-solution__problem-title">
+              {% comment %} <span class="problem-solution__icon">⚠️</span>  {% endcomment %}
+              {{ block.settings.problem_title | escape }}
+            </h3>
+          {%- endif -%}
+
+          {%- if block.settings.description != blank -%}
+            <div class="problem-solution__description">
+              {{ block.settings.description }}
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.solution_highlight != blank -%}
+            <div class="problem-solution__highlight">
+              {% comment %} <span class="problem-solution__icon">💡</span> {% endcomment %}
+              <strong>Solution:</strong> {{ block.settings.solution_highlight | escape }}
+            </div>
+          {%- endif -%}
+
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Problem → Solution Blocks",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Challenges We Solve"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#121212"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Left",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Right",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "problem_block",
+      "name": "Problem Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "problem_title",
+          "label": "Problem Title",
+          "default": "Manual Data Entry"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Short Description",
+          "default": "<p>Employees spend hours manually copying and pasting data across platforms, leading to errors and wasted time.</p>"
+        },
+        {
+          "type": "text",
+          "id": "solution_highlight",
+          "label": "Solution Highlight",
+          "default": "Automated workflow integrations."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Blocks",
+      "blocks": [
+        { "type": "problem_block" },
+        { "type": "problem_block" },
+        { "type": "problem_block" }
+      ]
+    }
+  ]
+}
+{% endschema %}

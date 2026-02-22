@@ -1,0 +1,165 @@
+{%- assign target_product = section.settings.product | default: product -%}
+
+{%- if target_product != blank -%}
+  {{ 'section-sticky-cta.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'sticky-cta.js' | asset_url }}" defer="defer"></script>
+
+  {%- style -%}
+    #StickyCTA-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      padding-left: {{ section.settings.padding_left }}px;
+      padding-right: {{ section.settings.padding_right }}px;
+      background-color: {{ section.settings.bg_color }};
+      border-top: 1px solid {{ section.settings.border_color }};
+    }
+
+    #StickyCTA-{{ section.id }} .sticky-cta__button {
+      background-color: {{ section.settings.button_bg_color }};
+      color: {{ section.settings.button_text_color }};
+    }
+  {%- endstyle -%}
+
+  <sticky-cta 
+    id="StickyCTA-{{ section.id }}" 
+    class="sticky-cta" 
+    data-scroll-threshold="{{ section.settings.scroll_threshold }}"
+    data-default-variant="{{ target_product.selected_or_first_available_variant.id }}"
+  >
+    {%- comment -%} Hidden JSON map of variants to prices for universal JS syncing {%- endcomment -%}
+    <script type="application/json" class="sticky-cta-variant-map">
+      {
+        {%- for variant in target_product.variants -%}
+          "{{ variant.id }}": "{{ variant.price | money }}"{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      }
+    </script>
+
+    <div class="sticky-cta__container">
+      <div class="sticky-cta__info">
+        <div class="sticky-cta__title">{{ target_product.title | escape }}</div>
+        <div class="sticky-cta__price">
+          {{ target_product.selected_or_first_available_variant.price | money }}
+        </div>
+      </div>
+      
+      <button type="button" class="sticky-cta__button" aria-label="Add to cart">
+        {{ section.settings.button_label | escape }}
+      </button>
+    </div>
+  </sticky-cta>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Sticky Mobile CTA",
+  "tag": "section",
+  "class": "section-sticky-cta",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "This section appears on mobile devices after scrolling. It automatically detects variant and price changes universally."
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Target Product",
+      "info": "Leave blank to automatically use the current product page."
+    },
+    {
+      "type": "range",
+      "id": "scroll_threshold",
+      "min": 100,
+      "max": 1000,
+      "step": 50,
+      "unit": "px",
+      "label": "Scroll Reveal Threshold",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Right",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sticky Mobile CTA"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,163 @@
+/* Social Proof Base */
+.social-proof {
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: var(--padding-top, 60px);
+  padding-bottom: var(--padding-bottom, 60px);
+  padding-left: var(--padding-left, 20px);
+  padding-right: var(--padding-right, 20px);
+  background-color: var(--bg-color, #000000);
+  overflow: hidden;
+}
+
+.social-proof__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.social-proof__heading {
+  text-align: center;
+  color: #ffffff;
+  /* Dark Theme */
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: -0.02em;
+}
+
+/* Trust Badge */
+.social-proof__trust-badge {
+  text-align: center;
+  margin: 0 auto 3rem auto;
+  padding: 0.75rem 1.5rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  /* Pill shape */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  box-sizing: border-box;
+}
+
+.social-proof__trust-stars {
+  color: #f5b301;
+  letter-spacing: 2px;
+  margin-right: 12px;
+  font-size: 1.25rem;
+}
+
+.social-proof__trust-text {
+  color: #e0e0e0;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+}
+
+.social-proof__trust-text strong {
+  color: #ffffff;
+}
+
+/* Grid & Cards (Mobile-first Slider) */
+.social-proof__grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.social-proof__grid::-webkit-scrollbar {
+  display: none;
+}
+
+.social-proof__block {
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+
+  /* Slider Setup for Mobile */
+  min-width: 100%;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+.social-proof__block:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.social-proof__rating {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+}
+
+.social-proof__star--filled {
+  color: #f5b301;
+}
+
+.social-proof__star--empty {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.social-proof__quote {
+  margin: 0 0 2rem 0;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+  flex-grow: 1;
+}
+
+.social-proof__quote p {
+  margin: 0;
+}
+
+.social-proof__author {
+  color: #ffffff;
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+}
+
+.social-proof__role {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+  font-size: 0.95rem;
+}
+
+/* Adjustments */
+@media screen and (max-width: 767px) {
+  .social-proof__trust-badge {
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 16px;
+    gap: 8px;
+  }
+
+  .social-proof__trust-stars {
+    margin-right: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .social-proof__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow-x: visible;
+    padding-bottom: 1rem;
+  }
+
+  .social-proof__block {
+    min-width: auto;
+  }
+}

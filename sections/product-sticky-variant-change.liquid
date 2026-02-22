@@ -1,0 +1,505 @@
+{%- assign target_product = section.settings.featured_product -%}
+
+{%- if target_product != blank -%}
+  {%- assign current_variant = target_product.selected_or_first_available_variant -%}
+
+  {%- capture section_styles -%}
+    --padding-top: {{ section.settings.padding_top }}px;
+    --padding-bottom: {{ section.settings.padding_bottom }}px;
+    --bg-color: {{ section.settings.bg_color }};
+  {%- endcapture -%}
+
+  <div id="ProductShowcase-{{ section.id }}" class="product-showcase" style="{{ section_styles }}">
+    <div class="product-showcase__container">
+      
+      {%- comment -%} MAIN DESKTOP / MOBILE SHOWCASE GRID {%- endcomment -%}
+      <div class="product-showcase__grid">
+        
+        <!-- Image Column -->
+        <div class="product-showcase__media">
+          <div class="product-showcase__image-wrapper">
+            <img 
+              id="MainProductImage-{{ section.id }}"
+              src="{{ current_variant.featured_image | default: target_product.featured_image | img_url: '1024x' }}" 
+              alt="{{ target_product.title | escape }}" 
+              class="product-showcase__image"
+              loading="lazy"
+            >
+          </div>
+        </div>
+
+        <!-- Details Column -->
+        <div class="product-showcase__info">
+          {%- if target_product.vendor != blank -%}
+            <span class="product-showcase__vendor">{{ target_product.vendor }}</span>
+          {%- endif -%}
+          
+          <h2 class="product-showcase__title">{{ target_product.title }}</h2>
+          
+          <div class="product-showcase__price-row">
+            <span class="product-showcase__price" id="MainProductPrice-{{ section.id }}">
+              {{ current_variant.price | money }}
+            </span>
+          </div>
+
+          <div class="product-showcase__variants">
+            <label class="product-showcase__variant-label">
+              Select Variant:
+            </label>
+            <div class="product-showcase__swatch-list">
+              {% for variant in target_product.variants %}
+                <button 
+                  type="button"
+                  class="product-showcase__swatch {% if variant.id == current_variant.id %}is-active{% endif %} {% unless variant.available %}is-sold-out{% endunless %}"
+                  data-variant-id="{{ variant.id }}"
+                  data-variant-price="{{ variant.price | money }}"
+                  data-variant-image="{{ variant.featured_image | default: target_product.featured_image | img_url: '1024x' }}"
+                  data-available="{{ variant.available }}"
+                  aria-label="{{ variant.title }}"
+                  title="{{ variant.title }}"
+                >
+                   {{ variant.title }}
+                </button>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Hidden Form for Main ATC -->
+          <input type="hidden" id="SelectedVariantId-{{ section.id }}" value="{{ current_variant.id }}">
+          
+          <button type="button" id="MainAddToCartBtn-{{ section.id }}" class="product-showcase__btn" {% unless current_variant.available %}disabled{% endunless %}>
+            <span class="product-showcase__btn-text">
+              {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} MOBILE STICKY BAR {%- endcomment -%}
+  <div id="StickyCTA-{{ section.id }}" class="sticky-cta">
+    <div class="sticky-cta__info">
+      <div class="sticky-cta__title">{{ target_product.title }}</div>
+      <div class="sticky-cta__price" id="StickyPrice-{{ section.id }}">
+        {{ current_variant.price | money }}
+      </div>
+    </div>
+    <button type="button" id="StickyAddBtn-{{ section.id }}" class="sticky-cta__button" aria-label="Add to cart" {% unless current_variant.available %}disabled{% endunless %}>
+      <span class="sticky-cta__btn-text">
+        {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
+      </span>
+    </button>
+  </div>
+
+  <style>
+    /* Section Base */
+    .product-showcase {
+      width: 100%;
+      background-color: var(--bg-color, #121212);
+      padding-top: calc(var(--padding-top, 60px) * 0.7);
+      padding-bottom: calc(var(--padding-bottom, 60px) * 0.7);
+      padding-left: 20px;
+      padding-right: 20px;
+      color: #ffffff;
+      box-sizing: border-box;
+    }
+
+    .product-showcase__container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product-showcase__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    /* Image */
+    .product-showcase__media {
+      width: 100%;
+    }
+    
+    .product-showcase__image-wrapper {
+      position: relative;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background-color: rgba(255, 255, 255, 0.03);
+      aspect-ratio: 1 / 1;
+    }
+
+    .product-showcase__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .product-showcase__image-wrapper:hover .product-showcase__image {
+      transform: scale(1.03);
+    }
+
+    /* Details */
+    .product-showcase__info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .product-showcase__vendor {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-showcase__title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      margin: 0 0 1rem 0;
+      line-height: 1.1;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .product-showcase__price-row {
+      margin-bottom: 2rem;
+    }
+
+    .product-showcase__price {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 500;
+      color: #a5d6a7;
+    }
+
+    /* Variants */
+    .product-showcase__variants {
+      margin-bottom: 2.5rem;
+    }
+
+    .product-showcase__variant-label {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .product-showcase__swatch-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .product-showcase__swatch {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .product-showcase__swatch:hover {
+      border-color: rgba(255, 255, 255, 0.5);
+      color: #ffffff;
+    }
+    
+    .product-showcase__swatch.is-active {
+      border-color: #ffffff;
+      background-color: #ffffff;
+      color: #000000;
+      font-weight: 600;
+    }
+    
+    .product-showcase__swatch.is-sold-out {
+      opacity: 0.4;
+      text-decoration: line-through;
+    }
+
+    /* Main CTA Button */
+    .product-showcase__btn {
+      background-color: #ffffff;
+      color: #000000;
+      border: none;
+      border-radius: 50px;
+      padding: 1.25rem 2rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      width: 100%;
+      max-width: 400px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+    }
+    
+    .product-showcase__btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+    }
+    
+    .product-showcase__btn:disabled {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.5);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Sticky Mobile Bar */
+    .sticky-cta {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(18, 18, 18, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #ffffff;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+      z-index: 9999;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-sizing: border-box;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    
+    .sticky-cta.is-visible {
+      transform: translateY(0);
+    }
+    
+    .sticky-cta__info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .sticky-cta__title {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 150px;
+    }
+    
+    .sticky-cta__price {
+      font-size: 14px;
+      color: #a5d6a7;
+      font-weight: 500;
+    }
+    
+    .sticky-cta__button {
+      background-color: #ffffff;
+      color: #000000;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 24px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.2s;
+    }
+    
+    .sticky-cta__button:active {
+      transform: scale(0.96);
+    }
+    
+    .sticky-cta__button:disabled {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.5);
+      cursor: not-allowed;
+    }
+
+    @media screen and (min-width: 768px) {
+      .product-showcase {
+        padding-top: var(--padding-top, 60px);
+        padding-bottom: var(--padding-bottom, 60px);
+      }
+      .product-showcase__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+      .sticky-cta {
+        display: none !important;
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const section = document.getElementById('ProductShowcase-{{ section.id }}');
+      if (!section) return;
+
+      // Elements
+      const swatches = section.querySelectorAll('.product-showcase__swatch');
+      const mainImage = document.getElementById('MainProductImage-{{ section.id }}');
+      const mainPrice = document.getElementById('MainProductPrice-{{ section.id }}');
+      const mainBtn = document.getElementById('MainAddToCartBtn-{{ section.id }}');
+      const mainBtnText = mainBtn.querySelector('.product-showcase__btn-text');
+      const variantHiddenInput = document.getElementById('SelectedVariantId-{{ section.id }}');
+      
+      const stickyBar = document.getElementById('StickyCTA-{{ section.id }}');
+      const stickyPrice = document.getElementById('StickyPrice-{{ section.id }}');
+      const stickyBtn = document.getElementById('StickyAddBtn-{{ section.id }}');
+      const stickyBtnText = stickyBtn ? stickyBtn.querySelector('.sticky-cta__btn-text') : null;
+
+      // 1. Scroll Logic for Sticky CTA (Mobile only)
+      window.addEventListener('scroll', () => {
+        if (window.innerWidth < 768 && stickyBar) {
+          const sectionRect = section.getBoundingClientRect();
+          // Show sticky bar when user scrolls past the middle of the showcase section
+          if (sectionRect.top < window.innerHeight / 2) {
+            stickyBar.classList.add('is-visible');
+          } else {
+            stickyBar.classList.remove('is-visible');
+          }
+        }
+      });
+
+      // 2. Swatch Clicking Sync
+      swatches.forEach(swatch => {
+        swatch.addEventListener('click', function() {
+          const variantId = this.dataset.variantId;
+          const variantPrice = this.dataset.variantPrice;
+          const variantImage = this.dataset.variantImage;
+          const available = this.dataset.available === 'true';
+
+          // Update active states
+          swatches.forEach(s => s.classList.remove('is-active'));
+          this.classList.add('is-active');
+
+          // Update Hidden ID
+          variantHiddenInput.value = variantId;
+
+          // Update Image
+          if (mainImage && variantImage) mainImage.src = variantImage;
+
+          // Update Prices
+          if (mainPrice) mainPrice.innerHTML = variantPrice;
+          if (stickyPrice) stickyPrice.innerHTML = variantPrice;
+
+          // Update Buttons
+          const updateBtn = (btn, textEl) => {
+            if (!btn) return;
+            if (available) {
+              btn.disabled = false;
+              textEl.textContent = "Add to Cart";
+            } else {
+              btn.disabled = true;
+              textEl.textContent = "Sold Out";
+            }
+          };
+          updateBtn(mainBtn, mainBtnText);
+          updateBtn(stickyBtn, stickyBtnText);
+        });
+      });
+
+      // 3. AJAX Add to Cart Logic
+      const handleAddToCart = (btn, btnTextEl) => {
+        if (btn.disabled) return;
+        
+        const variantId = variantHiddenInput.value;
+        const originalText = btnTextEl.textContent;
+        
+        btnTextEl.textContent = 'Adding...';
+        btn.disabled = true;
+
+        fetch(window.Shopify.routes.root + 'cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            items: [{
+              id: variantId,
+              quantity: 1
+            }]
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          // Trigger Theme's Cart Update Event
+          if (window.publish && window.PUB_SUB_EVENTS && window.PUB_SUB_EVENTS.cartUpdate) {
+            publish(PUB_SUB_EVENTS.cartUpdate, { source: 'product-showcase', productVariantId: variantId, cartData: data });
+          } else {
+            window.location.href = window.Shopify.routes.root + 'cart';
+          }
+          btnTextEl.textContent = 'Added!';
+          setTimeout(() => {
+            btnTextEl.textContent = originalText;
+            btn.disabled = false;
+          }, 2000);
+        })
+        .catch(err => {
+          console.error(err);
+          btnTextEl.textContent = originalText;
+          btn.disabled = false;
+        });
+      };
+
+      if (mainBtn) mainBtn.addEventListener('click', () => handleAddToCart(mainBtn, mainBtnText));
+      if (stickyBtn) stickyBtn.addEventListener('click', () => handleAddToCart(stickyBtn, stickyBtnText));
+    });
+  </script>
+
+{%- else -%}
+  <div style="padding: 60px 20px; text-align:center; background:#121212; color:#fff;">
+    <p>Please select a Featured Product in the theme settings.</p>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Custom Product Showcase",
+  "settings": [
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Featured Product"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Product Showcase"
+    }
+  ]
+}
+{% endschema %}

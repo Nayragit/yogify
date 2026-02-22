@@ -1,0 +1,147 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "custom_hero_HMiNff": {
+      "type": "custom-hero",
+      "name": "Custom Hero",
+      "settings": {
+        "image_desktop": "shopify://shop_images/5.webp",
+        "image_mobile": "shopify://shop_images/4.webp",
+        "title": "Unroll. Connect. Practice",
+        "subheading": "<p>YogiFi senses every posture, provides instant feedback, and helps refine your alignment, making every practice precise, mindful, and connected.</p>",
+        "text_alignment": "center",
+        "button_label": "Shop Now",
+        "button_link": "shopify://products/yogifi-smart-mat-gen3",
+        "button_bg_color": "#ffffff",
+        "button_text_color": "#000000",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_left": 20,
+        "padding_right": 20
+      }
+    },
+    "product_sticky_variant_change_aQc6d9": {
+      "type": "product-sticky-variant-change",
+      "name": "Custom Product Showcase",
+      "settings": {
+        "featured_product": "yogifi-smart-mat-gen3",
+        "bg_color": "#121212",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "custom_block_section_Ek3TQU": {
+      "type": "custom-block-section",
+      "blocks": {
+        "problem_block_EyQURW": {
+          "type": "problem_block",
+          "settings": {
+            "problem_title": "Instant posture detection and feedback",
+            "description": "<p>Sensors in the mat monitor your posture, while visual indicators light up to give instant feedback so you can correct alignment in real time and practice without second-guessing.</p>",
+            "solution_highlight": "Do Meditation"
+          }
+        },
+        "problem_block_MtAQGL": {
+          "type": "problem_block",
+          "settings": {
+            "problem_title": "Completely guided sessions",
+            "description": "<p>Each YogiFi program features guided videos that lead you through your practice step by step. From warm-up to final relaxation, expert instructions help you maintain precise posture throughout the session.</p>",
+            "solution_highlight": "Do Asanas"
+          }
+        },
+        "problem_block_99ndHP": {
+          "type": "problem_block",
+          "settings": {
+            "problem_title": "Instant posture detection and feedback",
+            "description": "<p>Sensors in the mat monitor your posture, while visual indicators light up to give instant feedback so you can correct alignment in real time and practice without second-guessing.</p>",
+            "solution_highlight": "Do Closing Prayer"
+          }
+        }
+      },
+      "block_order": [
+        "problem_block_EyQURW",
+        "problem_block_MtAQGL",
+        "problem_block_99ndHP"
+      ],
+      "name": "Custom Blocks",
+      "settings": {
+        "heading": "Challenges We Solve Here",
+        "bg_color": "#121212",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_left": 20,
+        "padding_right": 20
+      }
+    },
+    "custom_social_proof_nEkXaB": {
+      "type": "custom-social-proof",
+      "blocks": {
+        "testimonial_hTP69b": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "testimonial": "<p>This solution completely transformed how we handle our data. Highly recommended!<br/></p>",
+            "author": "Jane Doe",
+            "role": "CEO, TechCorp"
+          }
+        },
+        "testimonial_GdNwxx": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "testimonial": "<p>This solution completely transformed how we handle our data. Highly recommended!</p>",
+            "author": "Jane Doe",
+            "role": "CEO, TechCorp"
+          }
+        },
+        "testimonial_Vh6Whi": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "testimonial": "<p>This solution completely transformed how we handle our data. Highly recommended!</p>",
+            "author": "Jane Doe",
+            "role": "CEO, TechCorp"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_hTP69b",
+        "testimonial_GdNwxx",
+        "testimonial_Vh6Whi"
+      ],
+      "name": " Custom Social Proof",
+      "settings": {
+        "heading": "What Our Clients Say",
+        "show_trust_indicator": true,
+        "bg_color": "#121212",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "padding_left": 20,
+        "padding_right": 20
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_hero_HMiNff",
+    "product_sticky_variant_change_aQc6d9",
+    "custom_block_section_Ek3TQU",
+    "custom_social_proof_nEkXaB"
+  ]
+}
