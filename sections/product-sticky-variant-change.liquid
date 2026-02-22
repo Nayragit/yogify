@@ -260,9 +260,7 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      background-color: rgba(18, 18, 18, 0.95);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background-color: var(--bg-color, #121212);
       color: #ffffff;
       padding: 16px 20px;
       display: flex;
@@ -340,7 +338,7 @@
     }
   </style>
 
-  <script>
+  <script type="module">
     document.addEventListener('DOMContentLoaded', () => {
       const section = document.getElementById('ProductShowcase-{{ section.id }}');
       if (!section) return;
