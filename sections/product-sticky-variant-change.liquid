@@ -12,10 +12,8 @@
   <div id="ProductShowcase-{{ section.id }}" class="product-showcase" style="{{ section_styles }}">
     <div class="product-showcase__container">
       
-      {%- comment -%} MAIN DESKTOP / MOBILE SHOWCASE GRID {%- endcomment -%}
       <div class="product-showcase__grid">
         
-        <!-- Image Column -->
         <div class="product-showcase__media">
           <div class="product-showcase__image-wrapper">
             <img 
@@ -28,7 +26,6 @@
           </div>
         </div>
 
-        <!-- Details Column -->
         <div class="product-showcase__info">
           {%- if target_product.vendor != blank -%}
             <span class="product-showcase__vendor">{{ target_product.vendor }}</span>
