@@ -20,7 +20,6 @@
           
           {%- if block.settings.problem_title != blank -%}
             <h3 class="problem-solution__problem-title">
-              {% comment %} <span class="problem-solution__icon">⚠️</span>  {% endcomment %}
               {{ block.settings.problem_title | escape }}
             </h3>
           {%- endif -%}
@@ -33,7 +32,6 @@
 
           {%- if block.settings.solution_highlight != blank -%}
             <div class="problem-solution__highlight">
-              {% comment %} <span class="problem-solution__icon">💡</span> {% endcomment %}
               <strong>Solution:</strong> {{ block.settings.solution_highlight | escape }}
             </div>
           {%- endif -%}
