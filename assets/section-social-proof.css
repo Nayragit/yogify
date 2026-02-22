@@ -1,4 +1,3 @@
-/* Social Proof Base */
 .social-proof {
   box-sizing: border-box;
   width: 100%;
@@ -18,7 +17,6 @@
 .social-proof__heading {
   text-align: center;
   color: #ffffff;
-  /* Dark Theme */
   margin-top: 0;
   margin-bottom: 2rem;
   font-weight: 700;
@@ -26,7 +24,6 @@
   letter-spacing: -0.02em;
 }
 
-/* Trust Badge */
 .social-proof__trust-badge {
   text-align: center;
   margin: 0 auto 3rem auto;
@@ -58,7 +55,6 @@
   color: #ffffff;
 }
 
-/* Grid & Cards (Mobile-first Slider) */
 .social-proof__grid {
   display: flex;
   overflow-x: auto;
@@ -84,7 +80,6 @@
   flex-direction: column;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
 
-  /* Slider Setup for Mobile */
   min-width: 100%;
   scroll-snap-align: start;
   flex-shrink: 0;
@@ -135,7 +130,6 @@
   font-size: 0.95rem;
 }
 
-/* Adjustments */
 @media screen and (max-width: 767px) {
   .social-proof__trust-badge {
     flex-direction: column;
